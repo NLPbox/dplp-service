@@ -1,0 +1,27 @@
+# interesting error
+
+# the dplp parser includes some kind of converter for its output format
+
+root@3af2ba47774e:/opt/DPLP# python rstparser.py /tmp 
+Read files from: /tmp
+Load Brown clusters for creating features ...
+Load parsing model ...
+Finish initializing ParsingModel
+Load model from file: model/parsing-model.pickle.gz
+Traceback (most recent call last):
+  File "rstparser.py", line 23, in <module>
+    main(path)
+  File "rstparser.py", line 16, in main
+    withdp=False)
+  File "/opt/DPLP/code/evalparser.py", line 70, in evalparser
+    drawrst(strtree, fmerge.replace(".merge",".ps"))
+  File "/opt/DPLP/code/util.py", line 180, in drawrst
+    cf = CanvasFrame()
+  File "/usr/lib/python2.7/dist-packages/nltk/draw/util.py", line 1654, in __init__
+    self._parent = Tk()
+  File "/usr/lib/python2.7/lib-tk/Tkinter.py", line 1818, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+_tkinter.TclError: no display name and no $DISPLAY environment variable
+
+# if you don't want a nltk/tkinter conversion, you need to add False to the params
+# python rstparser.py /tmp False

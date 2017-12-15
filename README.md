@@ -1,10 +1,10 @@
 # build
 
-docker build -t codra-service .
+docker build -t dplp-service .
 
 # run
 
-docker run -p 8000:8000 -ti codra-service
+docker run -p 8000:8000 -ti dplp-service
 
 # usage
 
@@ -13,11 +13,20 @@ $ cat test.txt
 Altough they didn't like him, they accepted the offer.
 
 $ curl -X POST -F "input=@test.txt" http://localhost:8000/parse -F output_format=original
-( Root (span 1 3)
-  ( Nucleus (span 1 2) (rel2par Same-Unit)
-    ( Satellite (leaf 1) (rel2par Attribution) (text _!Altough_!) )
-    ( Nucleus (leaf 2) (rel2par span) (text _!they did n't like him ,_!) )
-   )
-  ( Nucleus (leaf 3) (rel2par Same-Unit) (text _!they accepted the offer ._!) )
-)
+0       1       Altough Altough NNP     root    0       O        (ROOT (FRAG (NP (NP (NNP Altough))     1
+0       2       they    they    PRP     nsubj   3       O        (SBAR (S (NP (PRP they))       2
+0       3       didn't  didn't  VBP     acl:relcl       1       O        (VP (VBP didn't)       2
+0       4       like    like    IN      case    5       O        (SBAR (S (PP (IN like) 2
+0       5       him,    him,    NN      nmod    7       O        (NP (NN him,)))        2
+0       6       they    they    PRP     nsubj   7       O        (NP (PRP they))        3
+0       7       accepted        accept  VBD     ccomp   3       O        (VP (VBD accepted)     3
+0       8       the     the     DT      det     9       O        (NP (DT the)   3
+0       9       offer.  offer.  NN      dobj    7       O        (NN offer.)))))))))))  3
+
+RELATIONS:
+
+((1, 1), 'Satellite', 'attribution')
+((2, 2), 'Nucleus', 'span')
+((3, 3), 'Satellite', 'elaboration')
+((2, 3), 'Nucleus', 'span')
 ```
