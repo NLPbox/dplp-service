@@ -11,6 +11,14 @@ INPUT_FILEPATH = '/tmp/input.txt'
 OUTPUT_FILEPATH = '/opt/DPLP/complete_output.txt'
 
 
+@hug.response_middleware()
+def process_data(request, response, resource):
+    """This is a middleware function that gets called for every request a hug API processes.
+    It will allow Javascript clients on other hosts / ports to access the API (CORS request).
+    """
+    response.set_header('Access-Control-Allow-Origin', '*')
+
+
 @hug.post('/parse', output=hug.output_format.file)
 def call_parser(body, output_format: hug.types.text):
     parser = sh.Command(os.path.join(PARSER_PATH, PARSER_EXECUTABLE))
