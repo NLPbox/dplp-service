@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker build -t dplp-service .
+
+script:
+  - docker run --entrypoint=/bin/bash -ti dplp-service -c py.test test_api.py

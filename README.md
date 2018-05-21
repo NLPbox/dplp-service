@@ -1,14 +1,25 @@
-# build
+# dplp-service
+
+[![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)
+
+This docker container allows you to build, install and run the
+[DPLP RST discourse parser](https://github.com/jiyfeng/DPLP)
+(Ji and Eisenstein 2014) as a REST API in a docker container.
+
+
+## build
 
 docker build -t dplp-service .
 
-# run
+## run
 
 docker run -p 8000:8000 -ti dplp-service
 
-# Usage Examples
 
-## CURL
+## Usage Examples
+
+### CURL
 
 ```
 $ cat test.txt 
@@ -33,7 +44,7 @@ RELATIONS:
 ((2, 3), 'Nucleus', 'span')
 ```
 
-## Javascript
+### Javascript
 
 ```
 >>> var xhr = new XMLHttpRequest();
