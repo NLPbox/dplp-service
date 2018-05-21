@@ -8,7 +8,16 @@ import sh
 PARSER_PATH = '/opt/DPLP'
 PARSER_EXECUTABLE = 'dplp.sh'
 INPUT_FILEPATH = '/tmp/input.txt'
+
+# files that DPLP will produce
 OUTPUT_FILEPATH = '/opt/DPLP/complete_output.txt'
+OUTPUT_PARSETREE_FILEPATH = '/tmp/input.txt.parsetree'
+OUTPUT_MERGE_FILEPATH = '/tmp/input.txt.merge'
+
+# the converter will use DPLP's output to produce this .rs3 file
+CONVERTER_PATH = '/opt/DPLP'
+CONVERTER_EXECUTABLE = 'dplp2rs3.sh'
+OUTPUT_RS3_FILEPATH = '/tmp/input.txt.rs3'
 
 
 @hug.response_middleware()
@@ -29,7 +38,15 @@ def call_parser(body, output_format: hug.types.text):
             input_file.write(input_file_content)
         
         parser_stdout = parser(input_file.name, _cwd=PARSER_PATH)
-        return OUTPUT_FILEPATH
+
+        if body['output_format'] == b'rs3':
+            # ~ import pudb; pudb.set_trace()
+            dplp2rs3 = sh.Command(os.path.join(CONVERTER_PATH, CONVERTER_EXECUTABLE))
+            dplp2rs3(OUTPUT_PARSETREE_FILEPATH, OUTPUT_MERGE_FILEPATH, _cwd=PARSER_PATH)
+            return OUTPUT_RS3_FILEPATH
     
+        else: # always fall back to the 'original' output format of the parser
+            return OUTPUT_FILEPATH
+
     else:
         return {'body': body}

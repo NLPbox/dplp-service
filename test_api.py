@@ -24,6 +24,20 @@ RELATIONS:
 ((2, 2), 'Satellite', 'elaboration')
 """
 
+EXPECTED_RS3 = """<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="elaboration" type="rst"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="3" parent="1" relname="span">Although they didn't like it,</segment>
+    <segment id="5" parent="3" relname="elaboration">they accepted the offer.</segment>
+    <group id="1" type="span"/>
+  </body>
+</rst>
+"""
 
 @pytest.fixture(scope="session", autouse=True)
 def start_api():
@@ -41,6 +55,14 @@ def test_api_plaintext():
     res = requests.post(
         'http://localhost:8000/parse',
         files={'input': INPUT_TEXT},
-        data={'output_format': 'output'})
+        data={'output_format': 'original'})
     assert res.content.decode('utf-8') == EXPECTED_OUTPUT
 
+
+def test_api_rs3():
+    """The dplp-service API produces the expected RS3 parse output."""
+    res = requests.post(
+        'http://localhost:8000/parse',
+        files={'input': INPUT_TEXT},
+        data={'output_format': 'rs3'})
+    assert res.content.decode('utf-8') == EXPECTED_RS3

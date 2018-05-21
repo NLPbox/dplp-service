@@ -42,6 +42,22 @@ RELATIONS:
 ((2, 2), 'Nucleus', 'span')
 ((3, 3), 'Satellite', 'elaboration')
 ((2, 3), 'Nucleus', 'span')
+
+
+$ curl -X POST -F "input=@test.txt" http://localhost:8000/parse -F output_format=rs3
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="elaboration" type="rst"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="3" parent="1" relname="span">Although they didn't like it,</segment>
+    <segment id="5" parent="3" relname="elaboration">they accepted the offer.</segment>
+    <group id="1" type="span"/>
+  </body>
+</rst>
 ```
 
 ### Javascript
