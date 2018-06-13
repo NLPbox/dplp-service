@@ -1,7 +1,7 @@
 # dplp-service
 
-[![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)
-[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)
+[![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://hub.docker.com/r/nlpbox/dplp-service/)
 
 This docker container allows you to build, install and run the
 [DPLP RST discourse parser](https://github.com/jiyfeng/DPLP)
