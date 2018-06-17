@@ -7,4 +7,5 @@ install:
   - docker build -t dplp-service .
 
 script:
-  - docker run --entrypoint=/bin/bash -ti dplp-service -c py.test test_api.py
+  - docker run -d -p 9000:9000 -ti nlpbox/corenlp:3.9.1
+  - docker run --net host --entrypoint=/bin/bash -ti dplp-service -c py.test test_api.py

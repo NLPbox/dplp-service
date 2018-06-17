@@ -1,4 +1,4 @@
-FROM nlpbox/dplp:2018-05-21-2
+FROM nlpbox/dplp:2018-06-17
 
 RUN apt-get update -y && \
     apt-get install -y python3 python3-pip && \
