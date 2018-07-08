@@ -5,7 +5,8 @@ services:
     ports:
       - "9000:9000"
   dplp-service:
-    build: .
+    image: "nlpbox/dplp-service:2018-06-17"
+#    build: . # build locally instead of using image from Docker Hub
     ports:
       - "9001:8000"
     environment:
