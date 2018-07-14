@@ -8,14 +8,11 @@ This docker container allows you to build, install and run the
 (Ji and Eisenstein 2014) as a REST API in a docker container.
 
 
-## build
+## build and run
 
-docker build -t dplp-service .
-
-## run
-
-docker run -p 8000:8000 -ti dplp-service
-
+git clone https://github.com/NLPbox/dplp-service.git
+cd dplp-service
+docker-compose up
 
 ## Usage Examples
 
@@ -25,7 +22,7 @@ docker run -p 8000:8000 -ti dplp-service
 $ cat test.txt 
 Altough they didn't like him, they accepted the offer.
 
-$ curl -X POST -F "input=@test.txt" http://localhost:8000/parse -F output_format=original
+$ curl -X POST -F "input=@test.txt" http://localhost:9001/parse -F output_format=original
 0       1       Altough Altough NNP     root    0       O        (ROOT (FRAG (NP (NP (NNP Altough))     1
 0       2       they    they    PRP     nsubj   3       O        (SBAR (S (NP (PRP they))       2
 0       3       didn't  didn't  VBP     acl:relcl       1       O        (VP (VBP didn't)       2
@@ -44,7 +41,7 @@ RELATIONS:
 ((2, 3), 'Nucleus', 'span')
 
 
-$ curl -X POST -F "input=@test.txt" http://localhost:8000/parse -F output_format=rs3
+$ curl -X POST -F "input=@test.txt" http://localhost:9001/parse -F output_format=rs3
 <?xml version='1.0' encoding='UTF-8'?>
 <rst>
   <header>
@@ -65,7 +62,7 @@ $ curl -X POST -F "input=@test.txt" http://localhost:8000/parse -F output_format
 ```
 >>> var xhr = new XMLHttpRequest();
 
->>> xhr.open("POST", "http://localhost:8000/parse")
+>>> xhr.open("POST", "http://localhost:9001/parse")
 
 >>> var data = new FormData();
 >>> data.append('input', 'Altough they didn\'t like him, they accepted the offer.');
