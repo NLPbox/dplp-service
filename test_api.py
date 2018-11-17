@@ -8,36 +8,8 @@ import requests
 import sh
 
 INPUT_TEXT = "Although they didn't like it, they accepted the offer."
-EXPECTED_OUTPUT = """0	1	Although	although	IN	mark	3	O	 (ROOT (SBAR (IN Although)	1
-0	2	they	they	PRP	nsubj	3	O	 (S (NP (PRP they))	1
-0	3	didn't	didn't	VBP	root	0	O	 (VP (VBP didn't)	1
-0	4	like	like	IN	case	5	O	 (PP (IN like)	1
-0	5	it,	it,	NN	nmod	3	O	 (NP (NP (NN it,))	1
-0	6	they	they	PRP	nsubj	7	O	 (SBAR (S (NP (PRP they))	2
-0	7	accepted	accept	VBD	acl:relcl	5	O	 (VP (VBD accepted)	2
-0	8	the	the	DT	det	9	O	 (NP (DT the)	2
-0	9	offer.	offer.	NN	dobj	7	O	 (NN offer.)))))))))))	2
+EXPECTED_OUTPUT = """0\t1\tAlthough\talthough\tIN\tmark\t3\tO\t (ROOT (SBAR (IN Although)\t1\n0\t2\tthey\tthey\tPRP\tnsubj\t3\tO\t (S (NP (PRP they))\t1\n0\t3\tdidn't\tdidn't\tVBP\troot\t0\tO\t (VP (VBP didn't)\t1\n0\t4\tlike\tlike\tIN\tcase\t5\tO\t (PP (IN like)\t1\n0\t5\tit,\tit,\tNN\tnmod\t3\tO\t (NP (NP (NN it,))\t1\n0\t6\tthey\tthey\tPRP\tnsubj\t7\tO\t (SBAR (S (NP (PRP they))\t2\n0\t7\taccepted\taccept\tVBD\tacl:relcl\t5\tO\t (VP (VBD accepted)\t2\n0\t8\tthe\tthe\tDT\tdet\t9\tO\t (NP (DT the)\t2\n0\t9\toffer.\toffer.\tNN\tdobj\t7\tO\t (NN offer.)))))))))))\t2\n\nParentedTree('NS-elaboration', [ParentedTree('EDU', ['1']), ParentedTree('EDU', ['2'])])"""
 
-RELATIONS:
-
-((1, 1), 'Nucleus', 'span')
-((2, 2), 'Satellite', 'elaboration')
-"""
-
-EXPECTED_RS3 = """<?xml version='1.0' encoding='UTF-8'?>
-<rst>
-  <header>
-    <relations>
-      <rel name="elaboration" type="rst"/>
-    </relations>
-  </header>
-  <body>
-    <segment id="3" parent="1" relname="span">Although they didn't like it,</segment>
-    <segment id="5" parent="3" relname="elaboration">they accepted the offer.</segment>
-    <group id="1" type="span"/>
-  </body>
-</rst>
-"""
 
 @pytest.fixture(scope="session", autouse=True)
 def start_api():
@@ -52,17 +24,9 @@ def start_api():
 
 def test_api_plaintext():
     """The dplp-service API produces the expected plaintext parse output."""
+    import pudb; pudb.set_trace()
     res = requests.post(
         'http://localhost:8000/parse',
         files={'input': INPUT_TEXT},
         data={'output_format': 'original'})
     assert res.content.decode('utf-8') == EXPECTED_OUTPUT
-
-
-def test_api_rs3():
-    """The dplp-service API produces the expected RS3 parse output."""
-    res = requests.post(
-        'http://localhost:8000/parse',
-        files={'input': INPUT_TEXT},
-        data={'output_format': 'rs3'})
-    assert res.content.decode('utf-8') == EXPECTED_RS3
