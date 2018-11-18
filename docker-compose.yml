@@ -1,11 +1,11 @@
 version: '3.3'
 services:
   corenlp:
-    image: "nlpbox/corenlp:3.9.1"
+    image: "nlpbox/corenlp:3.9.2"
     ports:
       - "9000:9000"
   dplp-service:
-    image: "nlpbox/dplp-service:2018-06-17"
+    image: "nlpbox/dplp-service:2018-11-18"
 #    build: . # build locally instead of using image from Docker Hub
     ports:
       - "9001:8000"
