@@ -11,9 +11,11 @@ This docker container allows you to build, install and run the
 
 ## build and run
 
+```
 git clone https://github.com/NLPbox/dplp-service.git
 cd dplp-service
 docker-compose up
+```
 
 ## Usage Examples
 
