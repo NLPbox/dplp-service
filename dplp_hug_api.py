@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import os
 import sys
+import traceback
 
+import falcon
 import hug
 import sh
 
@@ -32,8 +34,12 @@ def call_parser(body):
         with open(INPUT_FILEPATH, 'wb') as input_file:
             input_file.write(input_file_content)
         
-        parser_stdout = parser(input_file.name, _cwd=PARSER_PATH)
-        return OUTPUT_FILEPATH
+        try:
+            parser_stdout = parser(input_file.name, _cwd=PARSER_PATH)
+            return OUTPUT_FILEPATH
+        except Exception:
+            ex_str = traceback.format_exc()
+            raise falcon.HTTPInternalServerError("Can't get result from CoreNLP", ex_str)
 
     else:
         return {'body': body}
